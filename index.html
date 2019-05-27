@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Logistic Regression in Digital Humanities</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="pygments.css" type="text/css" />
+    <style>
+      pre { padding: 7px;}
+      th {color: white; background-color: black; padding-top: 7px; padding-bottom: 7px;}
+      td {padding: 3px; }
+      table { width: 100%; border-collapse: collapse;}
+      td, th {border: 1px solid black; font-size: 95%; text-align: center;
+      }
+      body {
+        font-family: 'Helvetica Neue', 'Arial', 'sans-serif';
+        color: rgba(34,34,34,.77);
+      }
+      .remark-slide-content h1 {
+          font-size: 45px;
+      }
+      h1 {
+        font-family: 'Helvetica Neue', 'Arial', 'sans-serif';
+        font-weight: normal;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        color: black;
+        font-variant: small-caps;
+      }
+      h2 {
+        font-family: 'Helvetica Neue', 'Arial', 'sans-serif';
+        font-weight: normal;
+        color: black;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      h3, h4 {
+        font-size: 115%;
+        color: rgba(34,34,34,.77);
+        font-weight: normal;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      p {
+        margin-top: 1px;
+        margin-bottom: 1px;
+      }
+      .youtube {
+        width: 100%;
+        height: 45vh;
+      }
+      .middle {
+        
+        background-image: linear-gradient(#E1E1E1, #47807A 45%);
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: middle
+
+# Getting Started with Machine Learning: 
+
+### Logistic Regression in Digital Humanities
+
+<hr>
+Matthew J. Lavin
+
+Clinical Assistant Professor of English and Director of Digital Media Lab
+
+University of Pittsburgh
+
+Summer 2019
+
+---
+class: middle
+
+# Pre-breakout Questionnaire
+
+<hr>
+
+- #### If you haven't already filled this out, please do so now: https://forms.gle/v34f2zhp7f2akXbe6
+
+- #### Check your email for the link
+
+- #### The link is also linked from a Github Repo I created for this breakout: https://github.com/mjlavin80/machine-learning-cmu-summer-2019 (this slideshow is there, too!)
+
+<hr>
+---
+class: middle
+
+# Introductions
+
+<hr>
+
+### Let's go around the room and say your name, what you are studying, and what you hope to learn in this breakout session.
+
+<hr>
+---
+class: middle
+
+# Machine Learning: The Big Picture
+
+<hr>
+
+- ### How do humans make decisions? 
+
+<hr>
+---
+class: middle
+
+# Machine Learning: The Big Picture
+
+<hr>
+
+- ### What are the pros and cons of human decision-making?
+- ### Why are machines different?
+
+<hr>
+---
+class: middle
+
+# Machine Learning: The Big Picture
+
+<hr>
+
+- #### Heuristics: 95% of decisions with rules of thumb
+- #### Good at generalizing after only a few observations and making ad hoc rules
+- #### Example: Are there more words in English that start with K or that have K as the third letter
+- #### See Kahneman and Tversky; see also Herb Simon on bounded rationality (CMU)
+
+<hr>
+
+---
+class: middle
+
+# Generating Hypotheses
+
+<hr>
+#### Let's brainstorm some predictions that logistic regression might help us with. A strong hypothesis will use continuous independent variables to predict some category expressed as a binary. For now, don't worry about how hard it might be to gather data. Just try writing one or more statements like this:
+
+- #### I believe that data about [__blank__], will successfully predict [__blank__].
+
+#### Examples: 
+
+- #### I believe that data about credit scores will successfully predict home ownership.
+- #### I want to know if data about novels' verb usage will successfully predict if it is science fiction.
+- #### I wonder if data about the shape of a tumor will successfully predict if it is cancer.
+- #### I bet that data about the frequencies of letters in the alphabet will successfully predict if a text is written in German.
+
+???
+If we wanted to predict a continuous variable, we'd use a linear regression, and if we had categorical independent variables, we might use a chi-squared test.
+
+<hr>
+
+---
+class: middle
+
+# Logistic Regression in Google Sheets
+
+<hr>
+
+### Let's look closely at an example using logistic regression to predict an author's gender.
+
+<hr>
+
+---
+class: middle
+
+# The Op-Eds Corpus
+
+<hr>
+#### The txt folder contains approximately 6,400 op-eds from _The New York Times_, all published between January and September 2018. There's a metadata.csv file with columns representing an &#60; id &#62;,&#60;  url &#62;,&#60; word\_count &#62;,&#60; snippet &#62;,&#60; source &#62;,&#60; byline &#62;,&#60; byline\_parsed &#62;,&#60; pub\_date &#62;, and &#60; inferred\_gender &#62;. With the exception of &#60; byline\_parsed &#62; and &#60; inferred\_gender &#62;, the fields are all taken from _The New York Times_ Article API. &#60; byline\_parsed &#62; attempts to isolate the author's name, and &#60; inferred\_gender &#62; assigns a gender label using the R package 'gender', which returns a gender probability given a name input and a date. The inference is made by looking up census data. 
+<hr>
+
+
+---
+class: middle
+
+# The Op-Eds Corpus
+
+<hr>
+#### Using Python, I loaded these data and isolated any op-eds labeled with an "m" or an "f", which is about 5,500 rows of data. I then extracted a count for each text representing the number of times it used the pronoun "I". The exported spreadsheet is in our Github repository (https://github.com/mjlavin80/machine-learning-cmu-summer-2019), in the __data__ folder. The __metadata__ csv is in the main directory of the repo.
+<hr>
+
+---
+
+class: middle
+
+# Instructions to calculate the logit
+
+<hr>
+#### 1. Open a new Google Sheet 
+#### 2. Copy/paste the data from __logistic_regression_one_variable.csv__ (or import the file)
+#### 3. Click add-ons > XLMiner Analysis Toolpak > Start
+#### 4. A new menu will open to the right. Scroll to "logistic regression" and click it
+#### 5. Fill in X as B1:B3001 (X is the label column)
+#### 6. Fill in Y as A1:A3001 (Y is the count of the pronoun "I")
+#### 6. Check the box for labels if you pasted the column headers
+#### 7. For "output range", choose an area to the right of your data such as D2
+#### 8. Click OK and wait a moment. Results will appear in your spreadsheet
+#### 9. We can use the resulting coefficient and intercept to make predictions (hence a training and test set)
+
+<hr>
+???
+The other CSVs show how to sort by random order in excel
+
+---
+class: middle
+
+# Logistic Regression in Text Analysis 
+
+<hr>
+#### We don't usually know which variables might predict a category, so we use logistic regression to discover the best coefficients. In text analysis, we might start with the 5000 most frequent words, train a model, and test its accuracy on new data. The math works the same for many variables as it does for one. 
+
+<hr>
+
+---
+class: middle
+
+# Conclusion 
+
+<hr>
+#### Where to from here? Most DH practitioners don't use Google Sheets for logistic regression. It would take a long time, and our spreadsheet would be unwieldy with thousands of columns! Using a programming language like R or Python, you can:
+
+1. Load text files and data labels
+2. Process text and count up term frequencies (or process other predictors)
+3. Split your data into training and test sets
+4. Train your model
+5. Measure accuracy
+6. View a list of coefficients, view outlier texts, etc.
+
+<hr>
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
