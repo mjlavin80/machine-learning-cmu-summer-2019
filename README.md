@@ -1,6 +1,6 @@
 # machine-learning-cmu-summer-2019
 
-Repository for "Getting Started with Machine Learning: Logistic Regression in Digital Humanities" break-out session
+Repository for "Getting Started with Machine Learning: Logistic Regression in Digital Humanities" break-out session. Slides at https://mjlavin80.github.io/machine-learning-cmu-summer-2019/
 
 
 # Breakout Schedule 
