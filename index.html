@@ -149,11 +149,10 @@ class: middle
 - #### I want to know if data about novels' verb usage will successfully predict if it is science fiction.
 - #### I wonder if data about the shape of a tumor will successfully predict if it is cancer.
 - #### I bet that data about the frequencies of letters in the alphabet will successfully predict if a text is written in German.
-
+<hr>
+      
 ???
 If we wanted to predict a continuous variable, we'd use a linear regression, and if we had categorical independent variables, we might use a chi-squared test.
-
-<hr>
 
 ---
 class: middle
@@ -165,7 +164,21 @@ class: middle
 ### Let's look closely at an example using logistic regression to predict an author's gender.
 
 <hr>
+---
+class: middle
 
+# XLMiner Analysis TookPak
+
+<hr>
+      
+1. Sign into Google Drive
+2. Open a Google spreadsheet
+3. Click "add-ons", and select "get add-ons".
+4. In the search bar, type " XLMiner Analysis TookPak".
+5. One result should appear with an "install" button next to it. Click that button to install the add-on.
+
+<hr>      
+    
 ---
 class: middle
 
@@ -182,8 +195,10 @@ class: middle
 # The Op-Eds Corpus
 
 <hr>
+      
 #### Using Python, I loaded these data and isolated any op-eds labeled with an "m" or an "f", which is about 5,500 rows of data. I then extracted a count for each text representing the number of times it used the pronoun "I". The exported spreadsheet is in our Github repository (https://github.com/mjlavin80/machine-learning-cmu-summer-2019), in the __data__ folder. The __metadata__ csv is in the main directory of the repo.
 <hr>
+      
 
 ---
 
@@ -192,6 +207,7 @@ class: middle
 # Instructions to calculate the logit
 
 <hr>
+      
 #### 1. Open a new Google Sheet 
 #### 2. Copy/paste the data from __logistic_regression_one_variable.csv__ (or import the file)
 #### 3. Click add-ons > XLMiner Analysis Toolpak > Start
